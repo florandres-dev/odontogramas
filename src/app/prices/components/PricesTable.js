@@ -18,8 +18,13 @@ const PricesTable = () => {
 	const [isLoadingOverlay, setIsLoadingOverlay] = useState(false);
 
 	const fetchPrices = async () => {
+		const apiUrl =
+			process.env.NODE_ENV === 'production'
+				? 'https://odontogramas.vercel.app/api/prices'
+				: '/api/prices';
+
 		try {
-			const response = await fetch('/api/prices');
+			const response = await fetch(apiUrl);
 			if (!response.ok) {
 				throw new Error('Network response was not ok');
 			}

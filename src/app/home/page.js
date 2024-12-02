@@ -3,9 +3,13 @@
 import { useEffect, useState } from 'react';
 import ChartsSection from './components/ChartsSection';
 import HomeMenu from './components/HomeMenu';
-import { patients } from '../data/patients';
 
 export default function Home() {
+	const apiUrl =
+		process.env.NODE_ENV === 'production'
+			? 'https://odontogramas.vercel.app/api/patients'
+			: '/api/patients/';
+
 	const [loadingPatients, setLoadingPatients] = useState(true);
 	const [patientsData, setPatientsData] = useState({});
 
@@ -17,7 +21,7 @@ export default function Home() {
 		}
 
 		try {
-			const response = await fetch('/api/patients/', {
+			const response = await fetch(apiUrl, {
 				method: 'GET',
 				headers: {
 					Authorization: `Bearer ${token}`,

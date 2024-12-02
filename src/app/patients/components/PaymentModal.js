@@ -18,7 +18,12 @@ const PaymentModal = ({ visible, onClose, patient }) => {
 	const [formCompleted, setFormCompleted] = useState(false);
 
 	const getTreatments = async () => {
-		const response = await fetch('/api/prices');
+		const apiUrl =
+			process.env.NODE_ENV === 'production'
+				? 'https://odontogramas.vercel.app/api/prices'
+				: '/api/prices';
+
+		const response = await fetch(apiUrl);
 		const data = await response.json();
 		setTreatmentList(data.data);
 	};
@@ -51,6 +56,11 @@ const PaymentModal = ({ visible, onClose, patient }) => {
 	}, [value, paidValue, treatment, date]);
 
 	const handlePayment = async () => {
+		const apiUrl =
+			process.env.NODE_ENV === 'production'
+				? 'https://odontogramas.vercel.app/api/bills/new'
+				: '/api/bills/new';
+
 		const paymentData = {
 			treatment: treatment,
 			patient_id: patient._id,
@@ -59,7 +69,7 @@ const PaymentModal = ({ visible, onClose, patient }) => {
 		};
 
 		try {
-			const response = await fetch('/api/bills/new', {
+			const response = await fetch(apiUrl, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

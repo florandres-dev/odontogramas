@@ -6,6 +6,11 @@ import Link from 'next/link';
 import LoadingOverlay from '../components/LoadingOverlay';
 
 const Patients = () => {
+	const apiUrl =
+		process.env.NODE_ENV === 'production'
+			? 'https://odontogramas.vercel.app/api/patients'
+			: '/api/patients/';
+
 	const [filterName, setFilterName] = useState('');
 	const [patients, setPatients] = useState([]);
 	const [loadingPatients, setLoadingPatients] = useState(true);
@@ -23,7 +28,7 @@ const Patients = () => {
 		}
 
 		try {
-			const response = await fetch('/api/patients/', {
+			const response = await fetch(apiUrl, {
 				method: 'GET',
 				headers: {
 					Authorization: `Bearer ${token}`,

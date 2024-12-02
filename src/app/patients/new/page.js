@@ -36,8 +36,13 @@ const NewPatient = () => {
 	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
+		const apiUrl =
+			process.env.NODE_ENV === 'production'
+				? 'https://odontogramas.vercel.app/api/healthcare'
+				: '/api/healthcare';
+
 		const fetchHealthcare = async () => {
-			const response = await fetch('/api/healthcare');
+			const response = await fetch(apiUrl);
 			const data = await response.json();
 			setOptions(data.data);
 		};
@@ -75,7 +80,12 @@ const NewPatient = () => {
 	};
 
 	const createPatient = async () => {
-		await fetch('/api/patients/new', {
+		const apiUrl =
+			process.env.NODE_ENV === 'production'
+				? 'https://odontogramas.vercel.app/api/patients/new'
+				: '/api/patients/new';
+
+		await fetch(apiUrl, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

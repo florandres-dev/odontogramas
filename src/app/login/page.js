@@ -5,6 +5,11 @@ import LoadingOverlay from '../components/LoadingOverlay';
 import { toast, Toaster } from 'sonner';
 
 const LoginForm = () => {
+	const apiUrl =
+		process.env.NODE_ENV === 'production'
+			? 'https://odontogramas.vercel.app/api/auth'
+			: '/api/auth/';
+
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
@@ -21,7 +26,7 @@ const LoginForm = () => {
 		setIsLoading(true);
 
 		try {
-			const response = await fetch('/api/auth/', {
+			const response = await fetch(apiUrl, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

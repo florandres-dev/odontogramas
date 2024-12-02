@@ -5,12 +5,17 @@ import UsersTable from './components/UsersTable';
 import AddUser from './components/AddUser';
 
 const AdminPanel = () => {
+	const apiUrl =
+		process.env.NODE_ENV === 'production'
+			? 'https://odontogramas.vercel.app/api/users'
+			: '/api/users/';
+
 	const [users, setUsers] = useState([]);
 	const [loadingUsers, setLoadingUsers] = useState(true);
 	const [token, setToken] = useState('');
 
 	const getUsers = async () => {
-		const response = await fetch('/api/users/', {
+		const response = await fetch(apiUrl, {
 			method: 'GET',
 			headers: {
 				Authorization: `Bearer ${token}`,

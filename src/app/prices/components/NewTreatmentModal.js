@@ -56,7 +56,12 @@ const TreatmentFormModal = ({ visible, onClose }) => {
 	}, [formData]);
 
 	const postTreatment = async (data) => {
-		await fetch('/api/prices/new', {
+		const apiUrl =
+			process.env.NODE_ENV === 'production'
+				? 'https://odontogramas.vercel.app/api/prices/new'
+				: '/api/prices/new';
+
+		await fetch(apiUrl, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

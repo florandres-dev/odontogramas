@@ -1,7 +1,12 @@
 const fetchPatients = async () => {
+	const apiUrl =
+		process.env.NODE_ENV === 'production'
+			? 'https://odontogramas.vercel.app/api/patients'
+			: '/api/patients/';
+
 	const token = localStorage.getItem('token');
 	try {
-		const response = await fetch('/api/patients/', {
+		const response = await fetch(apiUrl, {
 			method: 'GET',
 			headers: {
 				Authorization: `Bearer ${token}`,

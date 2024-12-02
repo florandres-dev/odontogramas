@@ -5,6 +5,11 @@ import { Tooltip } from 'primereact/tooltip';
 import React, { useEffect, useState } from 'react';
 
 const AddUser = () => {
+	const apiUrl =
+		process.env.NODE_ENV === 'production'
+			? 'https://odontogramas.vercel.app/api/users/new'
+			: '/api/users/new';
+
 	const [mail, setMail] = useState('');
 	const [name, setName] = useState('');
 	const [lastname, setLastname] = useState('');
@@ -37,7 +42,7 @@ const AddUser = () => {
 
 	const handleCreate = async () => {
 		setIsLoading(true);
-		const response = await fetch('/api/users/new', {
+		const response = await fetch(apiUrl, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
