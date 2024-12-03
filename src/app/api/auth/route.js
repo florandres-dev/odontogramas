@@ -22,7 +22,10 @@ export async function verifyPassword(plainPassword, hashedPassword) {
 
 export async function POST(request) {
 	try {
+		console.log('Connecting to the database...');
 		const { db } = await connectToDatabase();
+		console.log('Database connection successful.');
+
 		const { email, password } = await request.json();
 		const newEmail = email.toLowerCase();
 
